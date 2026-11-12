@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HABIBA AKTER — AI-Powered Google Ads Specialist</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%231e3a8a'/%3E%3Ctext x='32' y='32' text-anchor='middle' dominant-baseline='central' font-family='Archivo, Arial, sans-serif' font-weight='900' font-size='24' fill='%23ffffff'%3EHA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#0a1020;
+    --black:#f5f5f5;
+    --gray-100:#121b30;
+    --gray-200:#243354;
+    --gray-400:#7a8aa8;
+    --gray-500:#9aa8c0;
+    --gray-600:#a8b6cc;
+    --gray-800:#e6ecf5;
+    --red:#f87171;
+    --red-soft:#2a1414;
+    --green:#4ade80;
+    --green-soft:#0f2417;
+    --theme-color:#1e3a8a;
+    --theme-hover:#2b4da8;
+    --theme-light:#3b82f6;
+    --font-display:'Archivo', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --ease: cubic-bezier(.22,.61,.36,1);
+    --dropdown-hover: rgba(255,255,255,.08);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:var(--font-body);
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--theme-light);color:#fff;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+  img{display:block;max-width:100%;}
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill{
+    -webkit-text-fill-color: var(--black) !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--gray-100) inset !important;
+    box-shadow: 0 0 0 1000px var(--gray-100) inset !important;
+    transition: background-color 9999s ease-in-out 0s;
+    caret-color: var(--black);
+  }
+
+  /* ============ LOADER ============ */
+  #loader{
+    position:fixed;inset:0;
+    background:#ffffff;
+    z-index:9999;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .9s var(--ease), opacity .7s ease;
+  }
+  #loader.done{transform:translateY(-100%);}
+  .loader-inner{overflow:hidden;text-align:center;}
+  .loader-name{
+    font-family:var(--font-display);
+    font-weight:900;
+    font-size:clamp(1.6rem,7.5vw,4.5rem);
+    color:#1e3a8a;
+    letter-spacing:.02em;
+    white-space:nowrap;
+  }
+  .loader-name span{
+    display:inline-block;
+    opacity:0;
+    transform:translateY(40px);
+    animation:letterUp .6s cubic-bezier(.25,.46,.45,.94) forwards;
+  }
+  @keyframes letterUp{to{opacity:1;transform:translateY(0);}}
+  .loader-track{
+    margin-top:22px;width:0;height:2px;
+    background:#e6e6e6;
+    position:relative;overflow:hidden;
+  }
+  .loader-bar{
+    position:absolute;left:0;top:0;bottom:0;width:0%;
+    background:var(--theme-color);
+    animation:loadBar 1.7s var(--ease) .35s forwards;
+  }
+  @keyframes loadBar{to{width:100%;}}
+  .loader-tag{
+    margin-top:14px;
+    font-family:var(--font-mono);
+    font-size:.68rem;letter-spacing:.28em;
+    color:#6b6b6b;
+    text-transform:uppercase;
+    opacity:0;
+    animation:fadeIn .6s ease .9s forwards;
+  }
+  @keyframes fadeIn{to{opacity:1;}}
+
+  /* ============ HEADER ============ */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:500;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px clamp(20px,5vw,56px);
+    background:rgba(10,16,32,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--gray-200);
+  }
+  .header-mark{
+    width:38px;height:38px;border-radius:50%;
+    background:var(--theme-color);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    font-family:var(--font-display);
+    font-weight:900;font-size:.78rem;letter-spacing:.02em;
+    color:#ffffff;
+    padding:0;
+    transition:background-color .25s var(--ease), transform .25s var(--ease);
+  }
+  .header-mark:hover{transform:scale(1.08) rotate(-6deg);background:var(--theme-hover);}
+  .header-mark:active{transform:scale(.94);}
+
+  .status-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);
+    font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+    border:1px solid var(--gray-200);
+    padding:7px 14px;border-radius:999px;
+  }
+  .status-dot{
+    width:7px;height:7px;border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 0 0 rgba(34,197,94,.5);
+    animation:pulseDot 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseDot{
+    0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,.45);}
+    50%{opacity:.4;box-shadow:0 0 0 5px rgba(34,197,94,0);}
+  }
+  nav.main-nav{display:flex;gap:38px;font-size:.92rem;font-weight:500;}
+  nav.main-nav a{position:relative;padding-bottom:4px;}
+  nav.main-nav a::after{
+    content:'';position:absolute;left:0;right:100%;bottom:0;height:1px;
+    background:var(--theme-light);transition:right .3s var(--ease);
+  }
+  nav.main-nav a:hover::after{right:0;}
+
+  /* LINKEDIN BUTTON (Replaced Dropdown) */
+  .btn-linkedin{
+    background:var(--theme-color);
+    color:#ffffff;
+    padding:10px 20px;font-size:.88rem;font-weight:600;
+    border-radius:999px;
+    display:inline-flex;align-items:center;gap:10px;
+    transition:opacity .25s ease, transform .25s ease, background .25s ease;
+  }
+  .btn-linkedin:hover{opacity:.85; background:var(--theme-hover); transform:translateY(-1px);}
+  .btn-linkedin svg{width:18px;height:18px;flex-shrink:0;}
+
+  .nav-toggle{display:none;width:26px;height:18px;position:relative;}
+  .nav-toggle span{position:absolute;left:0;right:0;height:2px;background:var(--black);transition:.3s;}
+  .nav-toggle span:nth-child(1){top:0;}
+  .nav-toggle span:nth-child(2){top:8px;}
+  .nav-toggle span:nth-child(3){top:16px;}
+
+  /* ============ SECTIONS SHARED ============ */
+  section{padding:150px clamp(20px,5vw,56px) 90px clamp(20px,5vw,50px);}
+  #home{padding-right:clamp(20px,4vw,40px);}
+  .eyebrow{
+    font-family:var(--font-mono);font-size:.72rem;
+    letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gray-600);
+    display:flex;align-items:center;gap:10px;margin-bottom:20px;
+  }
+  .eyebrow::before{content:'';width:26px;height:1px;background:var(--theme-light);}
+  h2.section-title{
+    font-family:var(--font-display);font-weight:900;
+    font-size:clamp(2rem,4.2vw,3.4rem);
+    line-height:1.05;letter-spacing:-.01em;
+  }
+
+  /* ============ HERO ============ */
+  #home{min-height:100vh;display:flex;align-items:center;padding-top:120px;}
+  .hero-grid{
+    width:100%;display:grid;
+    grid-template-columns:0.75fr 1.3fr;gap:20px;align-items:center;
+  }
+  .hero-status{margin-bottom:24px;}
+  h1.hero-title{
+    font-family:var(--font-display);font-weight:900;
+    font-size:clamp(3rem,7.5vw,6.2rem);
+    line-height:.98;letter-spacing:-.02em;
+    white-space:nowrap;max-width:100%;
+  }
+  .hero-role{
+    margin-top:26px;
+    font-family:var(--font-mono);font-weight:700;
+    font-size:1rem;letter-spacing:.04em;
+    color:var(--gray-800);
+    border-left:2px solid var(--theme-light);
+    padding-left:14px;min-height:1.3em;
+  }
+  .hero-role .type-cursor{
+    display:inline-block;margin-left:2px;
+    animation:blinkCursor .8s step-end infinite;
+  }
+  @keyframes blinkCursor{50%{opacity:0;}}
+  .hero-desc{
+    margin-top:22px;max-width:460px;
+    color:var(--gray-600);font-size:1.02rem;line-height:1.65;
+  }
+  .hero-cta{
+    margin-top:34px;
+    display:flex;gap:14px;flex-wrap:wrap;
+    align-items:center;
+    padding-top:22px;
+    border-top:1px solid var(--gray-200);
+    max-width:480px;
+  }
+
+  .btn-black{
+    background:var(--theme-color);
+    color:#ffffff;
+    padding:11px 22px;font-size:.88rem;font-weight:600;
+    border-radius:999px;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:opacity .25s ease, transform .25s ease, background .25s ease;
+  }
+  .btn-black:hover{opacity:.85; background:var(--theme-hover);}
+
+  .btn-outline{
+    border:1.5px solid var(--theme-light);
+    background:transparent;
+    color:#ffffff;
+    padding:11px 24px;border-radius:999px;
+    font-size:.88rem;font-weight:600;
+    transition:background .25s ease, color .25s ease;
+  }
+  .btn-outline:hover{
+    background:var(--theme-light);
+    color:#ffffff;
+  }
+
+  .portrait-wrap{
+    position:relative;width:min(420px,95%);aspect-ratio:1/1;
+    display:flex;align-items:center;justify-content:center;
+    margin-left:auto;
+  }
+  .ring-rotate{
+    position:absolute;inset:0;border-radius:50%;
+    background:var(--theme-color);
+    box-shadow:0 30px 70px -25px rgba(0,0,0,.4);
+  }
+  .portrait-photo{
+    position:absolute;inset:4%;border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, #3a3a3a 0%, #0a0a0a 55%, #000 100%);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;border:5px solid var(--white);
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.5);
+  }
+  .portrait-photo img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;object-position:center;border-radius:50%;
+  }
+  .portrait-dot{
+    position:absolute;bottom:5%;right:5%;
+    width:16px;height:16px;border-radius:50%;
+    background:#22c55e;border:3px solid var(--white);z-index:3;
+  }
+
+  /* ============ ABOUT ============ */
+  #about{background:var(--gray-100);}
+  .text-normal{font-weight:400;}
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.25fr .9fr;
+    gap:clamp(30px,5vw,70px);
+    margin-top:48px;
+    align-items:start;
+  }
+  .about-text p{
+    color:var(--gray-600);font-size:1.02rem;
+    line-height:1.8;margin-bottom:18px;
+  }
+  .about-text strong{color:var(--black);}
+  .about-bullets{list-style:none;margin-bottom:18px;}
+  .about-bullets li{
+    position:relative;padding-left:26px;
+    color:var(--gray-600);font-size:1.02rem;
+    line-height:1.7;margin-bottom:16px;
+  }
+  .about-bullets li::before{
+    content:'';position:absolute;left:2px;top:.62em;
+    width:8px;height:8px;border-radius:50%;background:var(--theme-light);
+  }
+  .about-bullets strong{color:var(--black);}
+  .about-text p:last-child{margin-bottom:0;}
+
+  .stat-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    width:100%;
+  }
+  .stat{
+    position:relative;
+    background:linear-gradient(145deg, #16204200, #ffffff05);
+    border:1px solid var(--gray-200);
+    border-radius:16px;
+    padding:26px 22px;
+    overflow:hidden;
+    transition:transform .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .stat::before{
+    content:'';position:absolute;top:0;left:0;
+    width:42px;height:3px;
+    background:var(--theme-light);
+    border-radius:0 0 4px 0;
+    opacity:.9;
+  }
+  .stat:hover{
+    transform:translateY(-4px);
+    border-color:var(--theme-light);
+    box-shadow:0 18px 36px -20px rgba(59,130,246,.35);
+  }
+  .stat-num{
+    font-family:var(--font-display);font-weight:900;
+    font-size:clamp(1.9rem,3.4vw,2.6rem);
+    line-height:1;
+    background:linear-gradient(135deg,#ffffff 0%, #9fb6e8 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .stat-label{
+    margin-top:10px;font-family:var(--font-mono);
+    font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--gray-600);
+  }
+
+  /* ============ SERVICES (Tab Style) ============ */
+  .svc-tabs{
+    margin-top:46px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--gray-200);
+    margin-bottom:32px;
+  }
+  .svc-tab{
+    font-family:var(--font-mono);
+    font-size:.78rem;
+    letter-spacing:.05em;
+    padding:11px 18px;
+    border-radius:999px;
+    border:1px solid var(--gray-200);
+    color:var(--gray-600);
+    background:transparent;
+    transition:all .25s var(--ease);
+    white-space:nowrap;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .svc-tab .tab-count{
+    font-size:.66rem;
+    padding:2px 7px;
+    border-radius:999px;
+    background:rgba(59,130,246,.12);
+    color:var(--theme-light);
+    transition:all .25s var(--ease);
+  }
+  .svc-tab:hover{border-color:var(--theme-light);color:var(--black);}
+  .svc-tab.active{
+    background:var(--theme-color);
+    border-color:var(--theme-color);
+    color:#ffffff;
+    box-shadow:0 8px 20px -8px rgba(59,130,246,.55);
+  }
+  .svc-tab.active .tab-count{background:rgba(255,255,255,.2);color:#ffffff;}
+
+  .svc-panel{display:none;}
+  .svc-panel.active{display:block;animation:svcFadeIn .4s var(--ease);}
+  @keyframes svcFadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+  .svc-container{
+    border:1px solid var(--gray-200);
+    border-radius:20px;
+    overflow:hidden;
+    background:linear-gradient(160deg, #121b30 0%, #0f1729 100%);
+    position:relative;
+    padding:30px;
+  }
+  .svc-container::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg, transparent, var(--theme-light), transparent);
+    opacity:.6;
+  }
+  .svc-content-wrap{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:30px;
+  }
+  .svc-text h3 {
+    font-family:var(--font-display);font-weight:800;
+    font-size:clamp(1.2rem,2vw,1.5rem);
+    margin-bottom:12px;color:#ffffff;
+  }
+  .svc-text p {
+    color:var(--gray-600);font-size:.95rem;line-height:1.7;margin-bottom:20px;
+  }
+  .service-bullets{list-style:none;}
+  .service-bullets li{
+    position:relative;padding-left:22px;
+    font-size:.95rem;color:var(--gray-600);
+    line-height:1.7;margin-bottom:10px;
+  }
+  .service-bullets li::before{
+    content:'';position:absolute;left:2px;top:.62em;
+    width:7px;height:7px;border-radius:50%;
+    background:var(--theme-light);
+    box-shadow:0 0 0 3px rgba(59,130,246,.12);
+  }
+
+  /* ============ PORTFOLIO (Tab Style) ============ */
+  .pf-tabs{
+    margin-top:46px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--gray-200);
+    margin-bottom:32px;
+  }
+  .pf-tab{
+    font-family:var(--font-mono);
+    font-size:.78rem;
+    letter-spacing:.05em;
+    padding:11px 18px;
+    border-radius:999px;
+    border:1px solid var(--gray-200);
+    color:var(--gray-600);
+    background:transparent;
+    transition:all .25s var(--ease);
+    white-space:nowrap;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .pf-tab .tab-count{
+    font-size:.66rem;
+    padding:2px 7px;
+    border-radius:999px;
+    background:rgba(59,130,246,.12);
+    color:var(--theme-light);
+    transition:all .25s var(--ease);
+  }
+  .pf-tab:hover{border-color:var(--theme-light);color:var(--black);}
+  .pf-tab.active{
+    background:var(--theme-color);
+    border-color:var(--theme-color);
+    color:#ffffff;
+    box-shadow:0 8px 20px -8px rgba(59,130,246,.55);
+  }
+  .pf-tab.active .tab-count{background:rgba(255,255,255,.2);color:#ffffff;}
+
+  .pf-panel{display:none;}
+  .pf-panel.active{display:block;animation:pfFadeIn .4s var(--ease);}
+  @keyframes pfFadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+  .pf-container{
+    border:1px solid var(--gray-200);
+    border-radius:20px;
+    overflow:hidden;
+    background:linear-gradient(160deg, #121b30 0%, #0f1729 100%);
+    position:relative;
+  }
+  .pf-container::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg, transparent, var(--theme-light), transparent);
+    opacity:.6;
+  }
+  .pf-counter-bar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 22px;
+    border-bottom:1px solid var(--gray-200);
+    background:rgba(59,130,246,.04);
+  }
+  .pf-counter-bar .pf-cat-title-small{
+    font-family:var(--font-mono);font-size:.68rem;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--theme-light);
+  }
+  .pf-counter-bar .pf-page-num{
+    font-family:var(--font-mono);font-size:.72rem;
+    letter-spacing:.06em;color:var(--gray-400);
+  }
+  .pf-carousel{display:flex;align-items:stretch;}
+  .pf-arrow{
+    flex:0 0 56px;display:flex;align-items:center;justify-content:center;
+    background:rgba(59,130,246,.05);
+    transition:background-color .2s ease;
+  }
+  .pf-arrow:hover{background:rgba(59,130,246,.15);}
+  .pf-arrow svg{width:18px;height:18px;stroke:var(--theme-light);fill:none;stroke-width:2;}
+  .pf-viewport{flex:1;min-width:0;position:relative;overflow:hidden;}
+  .pf-slide{display:none;}
+  .pf-slide.active{
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:clamp(20px,3vw,36px);align-items:center;
+    padding:clamp(22px,3.5vw,34px) clamp(20px,3.5vw,32px);
+    animation:pfFade .4s var(--ease);
+  }
+  @keyframes pfFade{from{opacity:0;transform:translateX(8px);}to{opacity:1;transform:translateX(0);}}
+
+  .pf-slide-eyebrow{
+    font-family:var(--font-mono);font-size:.68rem;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--theme-light);margin-bottom:10px;
+  }
+  .pf-slide-title{
+    font-family:var(--font-display);font-weight:800;
+    font-size:clamp(1.1rem,1.8vw,1.45rem);
+    line-height:1.25;margin-bottom:12px;
+  }
+  .pf-slide-desc{font-size:.94rem;line-height:1.7;color:var(--gray-600);}
+
+  .pf-slide-media{
+    position:relative;aspect-ratio:16/10;border-radius:14px;overflow:hidden;
+    border:1px solid var(--gray-200);background:var(--gray-100);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .pf-slide-media.has-image{cursor:zoom-in;}
+  .pf-slide-media img{width:100%;height:100%;object-fit:cover;display:block;}
+  .pf-img-placeholder{
+    text-align:center;padding:18px;
+    color:var(--gray-400);font-family:var(--font-mono);
+    font-size:.72rem;letter-spacing:.03em;line-height:1.6;
+  }
+  .pf-img-placeholder svg{width:26px;height:26px;margin:0 auto 8px;stroke:var(--gray-400);fill:none;stroke-width:1.4;}
+  .pf-img-counter{
+    position:absolute;bottom:10px;right:12px;
+    font-family:var(--font-mono);font-size:.65rem;letter-spacing:.05em;
+    color:#ffffff;background:rgba(30,58,138,.85);backdrop-filter:blur(4px);
+    padding:4px 9px;border-radius:999px;
+  }
+
+  /* Lightbox */
+  .pf-lightbox{
+    position:fixed;inset:0;z-index:3000;
+    background:rgba(0,0,0,.92);
+    display:none;align-items:center;justify-content:center;
+    padding:50px clamp(16px,6vw,80px);
+  }
+  .pf-lightbox.open{display:flex;}
+  .pf-lightbox img{max-width:100%;max-height:78vh;border-radius:10px;display:block;cursor:pointer;}
+  .pf-lightbox-close{
+    position:absolute;top:22px;right:26px;
+    width:40px;height:40px;border-radius:50%;
+    background:rgba(255,255,255,.1);
+    display:flex;align-items:center;justify-content:center;color:#fff;
+  }
+  .pf-lightbox-close:hover{background:rgba(255,255,255,.2);}
+  .pf-lightbox-close svg{width:18px;height:18px;}
+  .pf-lightbox-nav{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:46px;height:46px;border-radius:50%;
+    background:rgba(255,255,255,.1);
+    display:flex;align-items:center;justify-content:center;color:#fff;
+  }
+  .pf-lightbox-nav:hover{background:rgba(59,130,246,.8); color: #fff;}
+  .pf-lightbox-nav svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;}
+  .pf-lightbox-prev{left:16px;}
+  .pf-lightbox-next{right:16px;}
+  .pf-lightbox-counter{
+    position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+    font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;
+    color:rgba(255,255,255,.7);
+  }
+
+  /* ============ CONTACT FORM ============ */
+  .form-wrap-section{
+    padding:70px clamp(20px,5vw,56px);
+    background:var(--gray-100);
+  }
+  .form-card{
+    max-width:680px;margin:0 auto;text-align:left;
+    border:1px solid var(--gray-200);border-radius:24px;
+    padding:clamp(26px,4.5vw,44px);
+    background:linear-gradient(160deg, #121b30 0%, #0f1729 100%);
+    box-shadow:0 30px 70px -40px rgba(59,130,246,.35);
+    position:relative;overflow:hidden;
+  }
+  .form-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg, transparent, var(--theme-light), transparent);
+    opacity:.8;
+  }
+  #contact-section .form-card{margin-top:36px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .form-field{
+    display:flex;flex-direction:column;gap:8px;
+    margin-bottom:18px;position:relative;
+  }
+  .form-field label{
+    font-family:var(--font-mono);font-size:.66rem;
+    letter-spacing:.12em;text-transform:uppercase;
+    color:var(--gray-800);font-weight:700;
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+  }
+  .form-field input[type="text"],
+  .form-field input[type="email"],
+  .form-field select,
+  .form-field textarea,
+  .country-trigger,
+  .multiselect-trigger{
+    border:1px solid var(--gray-200);border-radius:12px;
+    padding:13px 15px;font-family:var(--font-body);
+    font-size:.94rem;background:rgba(10,16,32,.6);
+    color:var(--black);width:100%;
+    transition:border-color .2s ease, background-color .2s ease, box-shadow .25s ease;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus,
+  .country-dropdown.open .country-trigger,
+  .multiselect.open .multiselect-trigger{
+    outline:none;border-color:var(--theme-light);
+    background:rgba(59,130,246,.06);
+    box-shadow:0 0 0 3px rgba(59,130,246,.15);
+  }
+  .form-field select{font-weight:400;}
+  .form-field select:invalid{color:var(--gray-400);}
+  .form-field textarea{resize:vertical;min-height:100px;}
+
+  .form-field.has-error input,
+  .form-field.has-error select,
+  .form-field.has-error textarea,
+  .form-field.has-error .multiselect-trigger,
+  .form-field.has-error .country-trigger{
+    border-color:var(--red) !important;
+    background:var(--red-soft);
+    box-shadow:0 0 0 3px rgba(220,38,38,.08);
+  }
+  .form-field.has-success input,
+  .form-field.has-success select,
+  .form-field.has-success textarea,
+  .form-field.has-success .country-trigger,
+  .form-field.has-success .multiselect-trigger{
+    border-color:var(--green) !important;
+    box-shadow:0 0 0 3px rgba(22,163,74,.08);
+  }
+  .form-field.has-success select{color: var(--black);}
+  .field-error{
+    display:none;align-items:center;gap:6px;
+    font-family:var(--font-mono);font-size:.7rem;
+    letter-spacing:.02em;color:var(--red);
+    margin-top:2px;line-height:1.4;
+  }
+  .form-field.has-error .field-error{display:flex;}
+  .field-error svg{width:12px;height:12px;flex-shrink:0;stroke:var(--red);fill:none;stroke-width:2;}
+
+  .email-suggest{
+    display:none;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:.72rem;
+    color:var(--gray-800);margin-top:4px;
+    padding:8px 12px;background:var(--gray-100);
+    border:1px dashed var(--gray-400);border-radius:8px;
+  }
+  .email-suggest.show{display:flex;}
+  .email-suggest button{
+    color:var(--theme-light);font-weight:700;
+    text-decoration:underline;font-family:inherit;
+    font-size:inherit;padding:0;
+  }
+
+  .country-dropdown{position:relative;}
+  .country-trigger{
+    display:flex;align-items:center;justify-content:space-between;
+    color:var(--gray-400);text-align:left;
+  }
+  .country-trigger.has-value{color:var(--black);}
+  .country-trigger svg{
+    width:11px;height:11px;flex-shrink:0;
+    margin-left:10px;color:var(--gray-400);
+    transition:transform .25s var(--ease);
+  }
+  .country-dropdown.open .country-trigger svg{transform:rotate(180deg);}
+  .country-panel{
+    position:absolute;top:calc(100% + 8px);left:0;right:0;
+    background:#121b30;border:1px solid var(--gray-200);
+    border-radius:14px;padding:8px;z-index:30;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .2s ease, transform .2s ease, visibility .2s;
+    box-shadow:0 20px 40px -20px rgba(0,0,0,.5);
+    display:flex;flex-direction:column;max-height:320px;
+  }
+  .country-dropdown.open .country-panel{opacity:1;visibility:visible;transform:translateY(0);}
+  .country-search{
+    width:100%;border:1px solid var(--gray-200);
+    border-radius:10px;padding:10px 12px;
+    font-family:var(--font-body);font-size:.9rem;
+    background:rgba(10,16,32,.6);color:var(--black);
+    margin-bottom:6px;outline:none;
+  }
+  .country-search:focus{border-color:var(--theme-light);}
+  .country-list{
+    overflow-y:auto;flex:1;display:flex;flex-direction:column;padding-right:2px;
+  }
+  .country-list::-webkit-scrollbar{width:6px;}
+  .country-list::-webkit-scrollbar-thumb{background:var(--gray-200);border-radius:3px;}
+  .country-option{
+    padding:9px 10px;border-radius:8px;
+    font-size:.9rem;cursor:pointer;
+    transition:background .15s ease;
+    color:var(--black);text-align:left;
+  }
+  .country-option:hover,
+  .country-option.highlighted{background:var(--gray-100); color:var(--theme-light);}
+  .country-option.selected{background:var(--gray-100);font-weight:600; color:var(--theme-light);}
+  .country-empty{
+    padding:14px 10px;text-align:center;
+    font-size:.82rem;color:var(--gray-400);
+    font-family:var(--font-mono);
+  }
+
+  .multiselect{position:relative;}
+  .multiselect-trigger{
+    display:flex;align-items:center;justify-content:space-between;
+    color:var(--gray-400);text-align:left;
+  }
+  .multiselect-trigger.has-value{color:var(--black);}
+  .multiselect-trigger svg{
+    width:11px;height:11px;flex-shrink:0;margin-left:10px;
+    color:var(--gray-400);transition:transform .25s var(--ease);
+  }
+  .multiselect.open .multiselect-trigger svg{transform:rotate(180deg);}
+  .multiselect-panel{
+    position:absolute;top:calc(100% + 8px);left:0;right:0;
+    background:#121b30;border:1px solid var(--gray-200);
+    border-radius:14px;padding:8px;z-index:20;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .2s ease, transform .2s ease, visibility .2s;
+    box-shadow:0 20px 40px -20px rgba(0,0,0,.5);
+  }
+  .multiselect.open .multiselect-panel{opacity:1;visibility:visible;transform:translateY(0);}
+  .multiselect-option{
+    display:flex;align-items:center;justify-content:flex-start;
+    gap:10px;padding:10px 10px;border-radius:8px;
+    font-size:.9rem;cursor:pointer;
+    transition:background .15s ease;text-align:left;
+  }
+  .multiselect-option:hover{background:var(--gray-100);}
+  .multiselect-option input{
+    width:16px;height:16px;accent-color:var(--theme-light);
+    cursor:pointer;flex-shrink:0;margin:0;
+  }
+  .multiselect-option span{flex:1;text-align:left;}
+
+  .form-submit-btn{
+    margin-top:8px;width:100%;
+    background:linear-gradient(135deg, var(--theme-color), var(--theme-light));
+    color:#ffffff;padding:14px 30px;
+    font-size:.92rem;font-weight:700;border-radius:12px;letter-spacing:.02em;
+    transition:opacity .25s ease, transform .2s ease, box-shadow .25s ease;
+    box-shadow:0 12px 28px -14px rgba(59,130,246,.55);
+  }
+  .form-submit-btn:hover{opacity:.95;transform:translateY(-1px);box-shadow:0 16px 32px -14px rgba(59,130,246,.65);}
+  .form-submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+  .form-success{
+    display:none;text-align:center;padding:30px 10px;
+    font-family:var(--font-display);font-weight:800;font-size:1.2rem;
+  }
+  .form-success p{
+    margin-top:10px;font-family:var(--font-body);
+    font-weight:400;font-size:.95rem;color:var(--gray-600);
+  }
+  @media (max-width:640px){
+    .form-row{grid-template-columns:1fr;}
+  }
+
+  /* ============ TOAST ============ */
+  .toast-stack{
+    position:fixed;top:88px;right:24px;z-index:4000;
+    display:flex;flex-direction:column;gap:10px;
+    max-width:340px;pointer-events:none;
+  }
+  .toast{
+    pointer-events:auto;
+    background:var(--black);color:var(--white);
+    border-radius:12px;padding:14px 16px;
+    font-size:.86rem;line-height:1.45;
+    box-shadow:0 18px 40px -12px rgba(0,0,0,.5);
+    display:flex;align-items:flex-start;gap:10px;
+    border-left:3px solid var(--theme-light);
+    animation:toastIn .35s var(--ease) forwards;
+    opacity:0;transform:translateX(30px);
+  }
+  @keyframes toastIn{to{opacity:1;transform:translateX(0);}}
+  .toast.hiding{animation:toastOut .3s var(--ease) forwards;}
+  @keyframes toastOut{to{opacity:0;transform:translateX(30px);}}
+  .toast.error{border-left-color:var(--red);}
+  .toast.success{border-left-color:var(--green);}
+  .toast.info{border-left-color:var(--theme-light);}
+  .toast svg{width:18px;height:18px;flex-shrink:0;margin-top:1px;}
+  .toast.error svg{stroke:var(--red);}
+  .toast.success svg{stroke:var(--green);}
+  .toast.info svg{stroke:var(--theme-light);}
+  .toast-body{flex:1;}
+  .toast-title{
+    font-family:var(--font-mono);font-size:.72rem;
+    letter-spacing:.08em;text-transform:uppercase;
+    opacity:.75;margin-bottom:2px;
+  }
+  .toast-msg{font-weight:500;}
+  @media (max-width:640px){
+    .toast-stack{top:auto;bottom:88px;right:12px;left:12px;max-width:none;}
+  }
+
+  /* ============ CONTACT / FOOTER ============ */
+  #contact-section{
+    background:var(--white);color:var(--black);text-align:center;
+    border-top:1px solid var(--gray-200);
+  }
+  #contact-section .eyebrow{color:var(--gray-400);justify-content:center;}
+  #contact-section .eyebrow::before{background:var(--theme-light);}
+  .contact-cta-title{
+    font-family:var(--font-display);font-weight:900;
+    font-size:clamp(2.2rem,6vw,4.6rem);
+    letter-spacing:-.02em;line-height:1.02;
+  }
+  .social-row{margin-top:46px;display:flex;justify-content:center;gap:26px;}
+  .social-row a{
+    width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--gray-200);
+    display:flex;align-items:center;justify-content:center;
+    transition:background .2s ease,border-color .2s ease, transform .2s ease;
+  }
+  .social-row a:hover{background:var(--gray-100);border-color:var(--theme-light);transform:translateY(-2px);}
+  .social-row svg{width:22px;height:22px;border-radius:6px;}
+  footer{
+    padding:26px clamp(20px,5vw,56px);
+    display:flex;justify-content:space-between;
+    font-family:var(--font-mono);font-size:.72rem;
+    color:var(--gray-500);letter-spacing:.05em;
+    border-top:1px solid var(--gray-200);margin-top:70px;
+  }
+
+  /* ============ FLOATING BUTTONS ============ */
+  .float-stack{
+    position:fixed;right:26px;bottom:28px;z-index:600;
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .float-btn{
+    --btn-bg:var(--black);
+    position:relative;width:56px;height:56px;border-radius:50%;
+    background:var(--btn-bg);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .2s ease;
+  }
+  .float-btn.whatsapp{
+    --btn-bg:#25D366;
+    box-shadow:0 8px 30px rgba(37,211,102,.4);
+    animation:pulse-wa 2.5s infinite;
+  }
+  .float-btn.gmail{
+    --btn-bg:#ffffff;border:1px solid var(--gray-200);
+    box-shadow:0 8px 30px rgba(234,67,53,.35);
+    animation:pulse-gmail 2.5s infinite 1s;
+  }
+  .float-btn:hover{transform:scale(1.1);}
+  .float-btn svg{width:28px;height:28px;position:relative;z-index:2;}
+  @keyframes pulse-wa{
+    0%,100%{box-shadow:0 8px 30px rgba(37,211,102,.4);}
+    50%{box-shadow:0 8px 40px rgba(37,211,102,.7),0 0 0 12px rgba(37,211,102,.08);}
+  }
+  @keyframes pulse-gmail{
+    0%,100%{box-shadow:0 8px 30px rgba(234,67,53,.35);}
+    50%{box-shadow:0 8px 40px rgba(234,67,53,.6),0 0 0 12px rgba(234,67,53,.08);}
+  }
+
+  /* ============ MOBILE ============ */
+  @media (max-width:900px){
+    nav.main-nav{
+      position:fixed;top:73px;left:0;right:0;
+      background:var(--white);flex-direction:column;gap:0;
+      padding:10px 0;border-bottom:1px solid var(--gray-200);
+      transform:translateY(-140%);
+      transition:transform .35s var(--ease);
+    }
+    nav.main-nav.open{transform:translateY(0);}
+    nav.main-nav a{padding:14px 26px;width:100%;}
+    .nav-toggle{display:block;}
+    .hero-grid{grid-template-columns:1fr;text-align:center;gap:30px;padding-right:20px;}
+    .hero-status{margin-inline:auto;}
+    .portrait-wrap{margin:0 auto;width:min(300px,80vw);}
+    .hero-desc{margin-inline:auto;}
+    .hero-cta{justify-content:center;margin-inline:auto;}
+    .about-grid{grid-template-columns:1fr;gap:36px;}
+    
+    .svc-content-wrap{grid-template-columns:1fr;}
+    .svc-tabs{gap:8px;}
+    .svc-tab{padding:9px 14px;font-size:.72rem;}
+
+    .pf-slide.active{grid-template-columns:1fr;}
+    .pf-slide-media{order:-1;}
+    .pf-arrow{flex-basis:42px;}
+    .pf-tabs{gap:8px;}
+    .pf-tab{padding:9px 14px;font-size:.72rem;}
+    footer{flex-direction:column;gap:8px;text-align:center;}
+    section{padding:110px clamp(20px,5vw,56px) 60px;}
+    .float-stack{right:18px;bottom:18px;gap:12px;}
+    .float-btn{width:48px;height:48px;}
+    .float-btn svg{width:23px;height:23px;}
+  }
+
+  @media (max-width:420px){
+    .about-bullets li{font-size:.96rem;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-name"><span style="animation-delay:.1s">H</span><span style="animation-delay:.15s">A</span><span style="animation-delay:.2s">B</span><span style="animation-delay:.25s">I</span><span style="animation-delay:.3s">B</span><span style="animation-delay:.35s">A</span><span style="animation-delay:.4s">&nbsp;</span><span style="animation-delay:.45s">A</span><span style="animation-delay:.5s">K</span><span style="animation-delay:.55s">T</span><span style="animation-delay:.6s">E</span><span style="animation-delay:.65s">R</span></div>
+    <div class="loader-track"><div class="loader-bar"></div></div>
+    <div class="loader-tag">AI-Powered Google Ads Specialist</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <button class="header-mark" type="button">HA</button>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="main-nav" id="mainNav">
+    <a href="#home">Home</a>
+    <a href="#about">About Me</a>
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+  </nav>
+  
+  <!-- Replaced Social Link Dropdown with simple LinkedIn Button -->
+  <a href="https://linkedin.com" target="_blank" rel="noopener" class="btn-linkedin">
+    <svg viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="5" fill="#fff"/><path fill="#0A66C2" d="M7.2 9.6h2.6v8.4H7.2V9.6zm1.3-4.1a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM11.4 9.6h2.5v1.15h.03c.35-.66 1.2-1.35 2.47-1.35 2.64 0 3.13 1.74 3.13 4v4.6h-2.6v-4.08c0-.97-.02-2.22-1.35-2.22-1.36 0-1.57 1.06-1.57 2.15v4.15h-2.6V9.6z"/></svg>
+    LinkedIn
+  </a>
+</header>
+
+<!-- HOME -->
+<section id="home">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="status-pill hero-status">
+        <span class="status-dot"></span>
+        <span class="status-text">Available for New Project</span>
+      </div>
+      <h1 class="hero-title">HABIBA AKTER</h1>
+      <div class="hero-role"><span id="typeRole"></span><span class="type-cursor">|</span></div>
+      <p class="hero-desc">I build accurate tracking systems, profitable ad campaigns, and clear data dashboards so every click turns into a decision you can trust.</p>
+      <div class="hero-cta">
+        <a href="#portfolio" class="btn-black">View Portfolio</a>
+        <a href="#contact-section" class="btn-outline">Let's Talk</a>
+      </div>
+    </div>
+    <div class="portrait-wrap">
+      <div class="ring-rotate"></div>
+      <div class="portrait-photo">
+        <img src="habiba_akter_profile_pic.jpg" alt="HABIBA AKTER">
+        <div class="portrait-dot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="eyebrow">About Me</div>
+  <h2 class="section-title">Good decisions start with data you can trust.</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm <span class="text-normal">Habiba Akter</span>, an <span class="text-normal">AI-Powered Google Ads Specialist</span>. Every business already has the data it needs to grow — the challenge is turning it into action. That's the gap I fill.<br>Here's how I help:</p>
+      <ul class="about-bullets">
+        <li><strong>Website Tracking</strong> — Know exactly what customers do on your site</li>
+        <li><strong>Google Ads Management</strong> — Profitable campaigns that bring the right customers</li>
+        <li><strong>E-commerce Products</strong> — Get your products live on Google Shopping</li>
+        <li><strong>GA4 Analytics</strong> — Clean setup, reports that actually matter</li>
+        <li><strong>Data Dashboards</strong> — Visual reports in Looker Studio that tell your business story</li>
+      </ul>
+      <p>I don't just set things up and walk away. I build systems that help you make smarter decisions and get more from your marketing budget.<br>Ready to make your marketing more data-driven? Let's talk.</p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Years Experience</div></div>
+      <div class="stat"><div class="stat-num">&lt; 24h</div><div class="stat-label">Response Time</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Tracking Accuracy</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Satisfaction</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES (Converted to Tab Layout) -->
+<section id="services">
+  <div class="eyebrow">Services</div>
+  <h2 class="section-title">What I can do for your business.</h2>
+  
+  <div class="svc-tabs" id="svcTabs"></div>
+  <div id="svcPanels"></div>
+</section>
+
+<!-- PORTFOLIO (Tab Layout) -->
+<section id="portfolio">
+  <div class="eyebrow">Portfolio</div>
+  <h2 class="section-title">Selected work.</h2>
+  <div class="pf-tabs" id="pfTabs"></div>
+  <div id="pfPanels"></div>
+</section>
+
+<!-- Lightbox -->
+<div class="pf-lightbox" id="pfLightbox">
+  <button class="pf-lightbox-close" id="pfLightboxClose" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <button class="pf-lightbox-nav pf-lightbox-prev" id="pfLightboxPrev" aria-label="Previous image">
+    <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+  </button>
+  <img id="pfLightboxImg" src="" alt="">
+  <button class="pf-lightbox-nav pf-lightbox-next" id="pfLightboxNext" aria-label="Next image">
+    <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+  <div class="pf-lightbox-counter" id="pfLightboxCounter"></div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact-section">
+  <div class="eyebrow" style="justify-content:center;">Get In Touch</div>
+  <h2 class="contact-cta-title">Let's turn your data<br>into growth.</h2>
+
+  <form class="form-card" id="contactForm" action="https://formspree.io/f/xjyvndpb" method="POST" novalidate>
+    <div class="form-row">
+      <div class="form-field" data-field="name">
+        <label for="contactName">Name</label>
+        <input type="text" id="contactName" name="name" required placeholder="Your full name" autocomplete="off">
+        <div class="field-error" data-error>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span data-error-msg>Please enter your name.</span>
+        </div>
+      </div>
+      <div class="form-field" data-field="email">
+        <label for="contactEmail">Email</label>
+        <input type="email" id="contactEmail" name="email" required placeholder="you@company.com" autocomplete="off">
+        <div class="field-error" data-error>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span data-error-msg>Please enter a valid email.</span>
+        </div>
+        <div class="email-suggest" data-email-suggest>
+          Did you mean <button type="button" data-email-suggest-btn></button>?
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field" data-field="country">
+        <label>Country</label>
+        <div class="country-dropdown" data-country-dropdown>
+          <button type="button" class="country-trigger" data-country-trigger>
+            <span data-country-label>Search your country</span>
+            <svg viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </button>
+          <div class="country-panel" data-country-panel>
+            <input type="text" class="country-search" data-country-search placeholder="Type to search...">
+            <div class="country-list" data-country-list></div>
+          </div>
+        </div>
+        <input type="hidden" name="country" id="contactCountry" required>
+        <div class="field-error" data-error>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span data-error-msg>Please select your country.</span>
+        </div>
+      </div>
+      <div class="form-field" data-field="businessType">
+        <label for="contactBusinessType">Business Type</label>
+        <select id="contactBusinessType" name="businessType" required>
+          <option value="" disabled selected hidden>Select business type</option>
+          <option>E-commerce</option>
+          <option>Lead Generation</option>
+          <option>SaaS</option>
+          <option>Local Business</option>
+          <option>Agency</option>
+          <option>Other</option>
+        </select>
+        <div class="field-error" data-error>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span data-error-msg>Please select a business type.</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-field" data-field="services">
+      <label>Service</label>
+      <div class="multiselect" data-multiselect>
+        <button type="button" class="multiselect-trigger" data-multiselect-trigger>
+          <span data-multiselect-label>Select service(s)</span>
+          <svg viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="multiselect-panel" data-multiselect-panel>
+          <label class="multiselect-option"><input type="checkbox" value="Website Tracking"><span>Website Tracking</span></label>
+          <label class="multiselect-option"><input type="checkbox" value="Google Ads Management"><span>Google Ads Management</span></label>
+          <label class="multiselect-option"><input type="checkbox" value="Google Merchant Center"><span>Google Merchant Center</span></label>
+          <label class="multiselect-option"><input type="checkbox" value="Data Analysis"><span>Data Analysis</span></label>
+          <label class="multiselect-option"><input type="checkbox" value="Data Visualization"><span>Data Visualization</span></label>
+        </div>
+      </div>
+      <div class="field-error" data-error>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <span data-error-msg>Please select at least one service.</span>
+      </div>
+    </div>
+    <div class="form-field" data-field="message">
+      <label for="contactMessage">Message</label>
+      <textarea id="contactMessage" name="message" required placeholder="Tell me a bit about your project..."></textarea>
+      <div class="field-error" data-error>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <span data-error-msg>Please write a short message.</span>
+      </div>
+    </div>
+    <button type="submit" class="form-submit-btn">Send Message</button>
+  </form>
+  <div class="form-success" id="contactFormSuccess" style="max-width:680px;margin:0 auto;">
+    Thanks, Habiba will get back to you soon!
+    <p>Your message has been noted.</p>
+  </div>
+
+  <div class="social-row">
+    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path fill="#fff" d="M15.4 12.6h-2.1V20h-3v-7.4H8.8v-2.6h1.5V8.4c0-1.9 1.1-3 3.3-3h2v2.5h-1.3c-.5 0-.9.2-.9.9v1.2h2.2l-.2 2.6z"/></svg>
+    </a>
+    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><defs><linearGradient id="igGradFT" x1="0" y1="24" x2="24" y2="0"><stop offset="0" stop-color="#FEDA75"/><stop offset=".25" stop-color="#FA7E1E"/><stop offset=".5" stop-color="#D62976"/><stop offset=".75" stop-color="#962FBF"/><stop offset="1" stop-color="#4F5BD5"/></linearGradient></defs><rect x="1" y="1" width="22" height="22" rx="6" fill="url(#igGradFT)"/><rect x="6.3" y="6.3" width="11.4" height="11.4" rx="3.6" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="17.3" cy="6.7" r="1" fill="#fff"/></svg>
+    </a>
+    <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="5" fill="#0A66C2"/><path fill="#fff" d="M7.2 9.6h2.6v8.4H7.2V9.6zm1.3-4.1a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM11.4 9.6h2.5v1.15h.03c.35-.66 1.2-1.35 2.47-1.35 2.64 0 3.13 1.74 3.13 4v4.6h-2.6v-4.08c0-.97-.02-2.22-1.35-2.22-1.36 0-1.57 1.06-1.57 2.15v4.15h-2.6V9.6z"/></svg>
+    </a>
+    <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
+      <svg viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="5" fill="#fff"/><path fill="#000" d="M6.5 6l4.7 6.3L6.2 18h1.8l3.8-4.6L14.9 18h3.4l-4.9-6.6L18 6h-1.8l-3.5 4.2L9.7 6H6.5z"/></svg>
+    </a>
+  </div>
+  <footer>
+    <span>© 2026 HABIBA AKTER</span>
+    <span>AI-Powered Google Ads Specialist</span>
+  </footer>
+</section>
+
+<!-- FLOATING BUTTONS -->
+<div class="float-stack">
+  <a href="https://wa.me/8800000000000" target="_blank" rel="noopener" class="float-btn whatsapp" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+  <a href="mailto:hello@habibaakter.com" class="float-btn gmail" aria-label="Gmail">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/>
+    </svg>
+  </a>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    const nameEl = document.querySelector('.loader-name');
+    const track = document.querySelector('.loader-track');
+    track.style.width = nameEl.getBoundingClientRect().width + 'px';
+    setTimeout(() => { document.getElementById('loader').classList.add('done'); }, 2600);
+  });
+
+  const navToggle = document.getElementById('navToggle');
+  const mainNav = document.getElementById('mainNav');
+  navToggle.addEventListener('click', () => mainNav.classList.toggle('open'));
+  mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mainNav.classList.remove('open')));
+
+  (function(){
+    const el = document.getElementById('typeRole');
+    if(!el) return;
+    const text = 'AI-POWERED GOOGLE ADS SPECIALIST';
+    let i = 0, deleting = false;
+    function tick(){
+      if(!deleting){
+        i++; el.textContent = text.slice(0, i);
+        if(i === text.length){ deleting = true; setTimeout(tick, 1600); return; }
+        setTimeout(tick, 90);
+      } else {
+        i--; el.textContent = text.slice(0, i);
+        if(i === 0){ deleting = false; setTimeout(tick, 500); return; }
+        setTimeout(tick, 45);
+      }
+    }
+    tick();
+  })();
+
+  // ============ SERVICES TABS SCRIPT ============
+  const servicesData = [
+    {
+      title: 'Website Tracking',
+      desc: 'Accurate setup for GA4, pixels, and consent so you never miss a conversion.',
+      bullets: [
+        'GA4 property setup with custom events and conversion tracking',
+        'Google Consent Mode and GDPR/CCPA compliance setup',
+        'Pixel installation for Meta, TikTok, Snapchat and other platforms',
+        'Session recording and heatmap integration',
+        'Offline conversion tracking setup',
+        'Full data-layer audits and validation'
+      ]
+    },
+    {
+      title: 'Google Ads Management',
+      desc: 'Profitable campaigns that bring the right customers and scale your ROI.',
+      bullets: [
+        'Search, Display and Performance Max campaign setup',
+        'Keyword research and bid strategy optimization',
+        'Weekly optimization, budget pacing and performance reporting',
+        'Quality Score improvement and ad relevance testing',
+        'Negative keyword audits and refinement',
+        'Scaling strategy for profitable campaigns'
+      ]
+    },
+    {
+      title: 'Google Merchant Center',
+      desc: 'Get your products live on Google Shopping with clean feeds and no errors.',
+      bullets: [
+        'Google Merchant Center account setup and verification',
+        'Product feed creation and optimization for Shopping Ads',
+        'Policy compliance and feed error resolution',
+        'Product feed syncing with inventory systems',
+        'Catalog data quality audits',
+        'Approval support and issue troubleshooting'
+      ]
+    },
+    {
+      title: 'Data Analysis',
+      desc: 'Turn raw numbers into actionable insights that drive business decisions.',
+      bullets: [
+        'Raw data collection and validation from GA4, Google Ads and Meta',
+        'Data segmentation by channel, audience and behavior',
+        'Performance metrics analysis and trend identification',
+        'Conversion funnel analysis and drop-off identification',
+        'ROI and ROAS calculations across campaigns',
+        'Actionable insights and recommendations reporting'
+      ]
+    },
+    {
+      title: 'Data Visualization',
+      desc: 'Clear, visual Looker Studio dashboards that tell your business story.',
+      bullets: [
+        'Looker Studio dashboard creation and design',
+        'Live data integration from GA4, Google Ads, Meta and Google Sheets',
+        'Custom reports and KPI tracking setup',
+        'Interactive charts and visualizations for insights',
+        'Automated performance alerts and notifications',
+        'Scheduled report delivery and stakeholder sharing'
+      ]
+    }
+  ];
+
+  function buildServicesTabs() {
+    const tabsEl = document.getElementById('svcTabs');
+    const panelsEl = document.getElementById('svcPanels');
+
+    servicesData.forEach((svc, idx) => {
+      // Tabs
+      const tab = document.createElement('button');
+      tab.className = 'svc-tab' + (idx === 0 ? ' active' : '');
+      tab.type = 'button';
+      tab.innerHTML = `${svc.title} <span class="tab-count">${svc.bullets.length}</span>`;
+      tab.addEventListener('click', () => activateSvcTab(idx));
+      tabsEl.appendChild(tab);
+
+      // Panels
+      const panel = document.createElement('div');
+      panel.className = 'svc-panel' + (idx === 0 ? ' active' : '');
+      
+      const bulletsHTML = svc.bullets.map(b => `<li>${b}</li>`).join('');
+
+      panel.innerHTML = `
+        <div class="svc-container">
+          <div class="svc-content-wrap">
+            <div class="svc-text">
+              <h3>${svc.title}</h3>
+              <p>${svc.desc}</p>
+            </div>
+            <div>
+              <ul class="service-bullets">
+                ${bulletsHTML}
+              </ul>
+            </div>
+          </div>
+        </div>
+      `;
+      panelsEl.appendChild(panel);
+    });
+
+    function activateSvcTab(idx) {
+      tabsEl.querySelectorAll('.svc-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+      panelsEl.querySelectorAll('.svc-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+    }
+  }
+  buildServicesTabs();
+
+  // ============ PORTFOLIO TABS SCRIPT ============
+  const portfolioData = [
+    {
+      title: 'Website Tracking', type: 'subtype',
+      items: [
+        { name: 'GA4 Ecommerce BS & SS Tracking', desc: 'GA4 Basic Setup (BS) and Server-Side (SS) tracking configured for e-commerce, covering purchase events, product data and accurate conversion reporting.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ga4_ecom_track_bs_ss_1.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ga4_ecom_track_bs_ss_2.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ga4_ecom_track_bs_ss_3.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ga4_ecom_track_bs_ss_4.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ga4_ecom_track_bs_ss_5.jpg'] },
+        { name: 'GAds Ecommerce & DRM BS & SS Tracking', desc: 'Google Ads Basic Setup (BS) and Server-Side (SS) tracking built for e-commerce and Dynamic Remarketing (DRM), ensuring accurate conversion and ROAS data.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/gads_ecom_drm_track_bs_ss_1.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/gads_ecom_drm_track_bs_ss_2.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/gads_ecom_drm_track_bs_ss_3.jpg'] },
+        { name: 'GA4 Lead BS & SS Tracking', desc: 'GA4 Basic Setup (BS) and Server-Side (SS) tracking configured for lead generation, capturing form submissions and key conversion events accurately.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ga4_lead_track_bs_ss_1.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ga4_lead_track_bs_ss_2.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ga4_lead_track_bs_ss_3.jpg'] },
+        { name: 'GAds Lead BS & SS Tracking', desc: 'Google Ads Basic Setup (BS) and Server-Side (SS) tracking built for lead generation campaigns, for reliable, conversion tracking and reporting.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/gads_lead_track_bs_ss_1.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/gads_lead_track_bs_ss_2.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/gads_lead_track_bs_ss_3.jpg'] },
+        { name: 'Cookie Boat CMP', desc: 'Cookiebot consent management platform (CMP) setup for GDPR / CCPA compliant cookie consent, so tracking stays compliant and data loss is minimized.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/cookie_boat_cmp_1.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/cookie_boat_cmp_2.jpg'] },
+        { name: 'Microsoft Clarity', desc: 'Session recording and heatmap tracking setup with Microsoft Clarity to understand real user behavior, rage-clicks and drop-off points on the site.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/microsoft_clarity_1.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/microsoft_clarity_2.jpg'] }
+      ]
+    },
+    {
+      title: 'Google Ads', type: 'subtype',
+      items: [
+        { name: 'Google Shopping Ads', desc: 'Product feed optimization and Shopping campaign structure built for maximum ROAS and product visibility.', images: [] },
+        { name: 'Google Search Ads', desc: 'High-intent keyword targeting, ad copy testing and bid strategy tuning for search campaigns.', images: [] },
+        { name: 'Google Ads Account Setup', desc: 'Full account structure, conversion setup and audit across all campaign types from scratch.', images: [] },
+        { name: 'Google Remarketing Ads', desc: 'Custom audience remarketing campaigns built to re-engage past visitors and cart abandoners.', images: [] },
+        { name: 'Performance Max Campaign', desc: 'Performance Max setup with optimized asset groups, audience signals and feed integration.', images: [] },
+        { name: 'Demand Gen Campaign', desc: 'Demand Gen campaigns for visual-led prospecting across YouTube, Discover and Gmail placements.', images: [] }
+      ]
+    },
+    {
+      title: 'Merchant Center', type: 'process',
+      items: [
+        { name: 'Account Create', desc: 'New Google Merchant Center account setup, business info and store URL/domain verification.', images: [] },
+        { name: 'Product Feed Setup', desc: 'Product feed creation and correct linking between Merchant Center and the Google Ads account.', images: [] },
+        { name: 'Issue Diagnose', desc: 'Auditing feed errors and policy disapprovals to identify the exact root cause behind each issue.', images: [] },
+        { name: 'Fix Applied & Approved', desc: 'Fixes implemented and re-submitted — products approved and live for Shopping ads.', images: [] }
+      ]
+    },
+    {
+      title: 'Data Analysis', type: 'process',
+      items: [
+        { name: 'Ecommerce Business - Data Analysis Overview', desc: 'A full walkthrough of the e-commerce data analysis process, covering raw data collection, key metrics review and overall performance overview.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_01.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_02.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_03.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_04.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_05.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_06.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_07.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_08.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_09.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_10.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_11.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_12.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_13.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_14.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_15.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_overview_16.jpg'] },
+        { name: 'Ecommerce Business - Problem Find & Take Decision', desc: 'Identifying performance problems and drop-offs in the e-commerce data, then turning those findings into clear, actionable decisions.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_01.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_02.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_03.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_04.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_05.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_06.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_07.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_08.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_09.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_10.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_11.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_12.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_13.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_14.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/ecom_data_analysis_decison_15.jpg'] }
+      ]
+    },
+    {
+      title: 'Data Visualization', type: 'process',
+      items: [
+        { name: 'Normal Dashboard', desc: 'A general-purpose Looker Studio dashboard giving an overview of key performance metrics at a glance.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/glc_01.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/glc_02.jpg'] },
+        { name: 'Meta Dashboard', desc: 'A dedicated dashboard tracking Meta (Facebook & Instagram) ad performance and campaign metrics.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/glc_meta_ads_01.jpg'] },
+        { name: 'Google Dashboard', desc: 'A dedicated dashboard tracking Google Ads performance, spend and conversion metrics.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/glc_google_ads_01.jpg'] },
+        { name: 'Instagram Dashboard', desc: 'A dedicated dashboard tracking Instagram ad performance and engagement metrics.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/glc_igads_01.jpg'] },
+        { name: 'Google Search Console Dashboard', desc: 'A dashboard built on Google Search Console data to track organic search performance and keyword visibility.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/glc_search_console_01.jpg'] },
+        { name: 'Blended Data Dashboard', desc: 'A blended data source dashboard combining multiple platforms into a single, unified view of performance.', images: ['https://raw.githubusercontent.com/iamrethoy/Portfolio/main/glc_blended_data_01.jpg','https://raw.githubusercontent.com/iamrethoy/Portfolio/main/glc_blended_data_02.jpg'] }
+      ]
+    }
+  ];
+
+  const pfIconArrow = (dir) => dir === 'prev'
+    ? '<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>'
+    : '<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>';
+  const pfPlaceholderSVG = '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5-9 9"/></svg>';
+
+  const lb = {
+    el: document.getElementById('pfLightbox'),
+    img: document.getElementById('pfLightboxImg'),
+    counter: document.getElementById('pfLightboxCounter'),
+    images: [], index: 0, onChange: null,
+    open(images, startIndex, onChange){ this.images = images; this.index = startIndex; this.onChange = onChange; this.render(); this.el.classList.add('open'); },
+    close(){ this.el.classList.remove('open'); },
+    render(){ this.img.src = this.images[this.index]; this.counter.textContent = (this.index + 1) + ' / ' + this.images.length; },
+    next(){ this.index = (this.index + 1) % this.images.length; this.render(); if(this.onChange) this.onChange(this.index); },
+    prev(){ this.index = (this.index - 1 + this.images.length) % this.images.length; this.render(); if(this.onChange) this.onChange(this.index); }
+  };
+  document.getElementById('pfLightboxClose').addEventListener('click', () => lb.close());
+  document.getElementById('pfLightboxNext').addEventListener('click', (e) => { e.stopPropagation(); lb.next(); });
+  document.getElementById('pfLightboxPrev').addEventListener('click', (e) => { e.stopPropagation(); lb.prev(); });
+  lb.img.addEventListener('click', () => lb.next());
+  lb.el.addEventListener('click', (e) => { if(e.target === lb.el) lb.close(); });
+  document.addEventListener('keydown', (e) => {
+    if(!lb.el.classList.contains('open')) return;
+    if(e.key === 'Escape') lb.close();
+    if(e.key === 'ArrowRight') lb.next();
+    if(e.key === 'ArrowLeft') lb.prev();
+  });
+
+  function buildPortfolioTabs(){
+    const tabsEl = document.getElementById('pfTabs');
+    const panelsEl = document.getElementById('pfPanels');
+    const tabStates = [];
+
+    portfolioData.forEach((cat, catIdx) => {
+      const tab = document.createElement('button');
+      tab.className = 'pf-tab' + (catIdx === 0 ? ' active' : '');
+      tab.type = 'button';
+      tab.innerHTML = `${cat.title} <span class="tab-count">${cat.items.length}</span>`;
+      tab.addEventListener('click', () => activateTab(catIdx));
+      tabsEl.appendChild(tab);
+
+      const state = { current: 0, imgIndex: 0, timer: null };
+      const panel = document.createElement('div');
+      panel.className = 'pf-panel' + (catIdx === 0 ? ' active' : '');
+      panel.innerHTML = `
+        <div class="pf-container">
+          <div class="pf-counter-bar">
+            <span class="pf-cat-title-small">${cat.title}</span>
+            <span class="pf-page-num" data-role="pagenum"></span>
+          </div>
+          <div class="pf-carousel">
+            <button class="pf-arrow pf-prev" type="button" aria-label="Previous">${pfIconArrow('prev')}</button>
+            <div class="pf-viewport">
+              <div class="pf-slide active">
+                <div class="pf-slide-info">
+                  <div class="pf-slide-eyebrow" data-role="eyebrow"></div>
+                  <div class="pf-slide-title" data-role="title"></div>
+                  <div class="pf-slide-desc" data-role="desc"></div>
+                </div>
+                <div class="pf-slide-media" data-role="media"></div>
+              </div>
+            </div>
+            <button class="pf-arrow pf-next" type="button" aria-label="Next">${pfIconArrow('next')}</button>
+          </div>
+        </div>
+      `;
+      panelsEl.appendChild(panel);
+
+      const pageNum = panel.querySelector('[data-role="pagenum"]');
+      const eyebrowEl = panel.querySelector('[data-role="eyebrow"]');
+      const titleEl = panel.querySelector('[data-role="title"]');
+      const descEl = panel.querySelector('[data-role="desc"]');
+      const mediaEl = panel.querySelector('[data-role="media"]');
+      const prevBtn = panel.querySelector('.pf-prev');
+      const nextBtn = panel.querySelector('.pf-next');
+
+      function renderMedia(){
+        const item = cat.items[state.current];
+        const images = item.images || [];
+        mediaEl.innerHTML = '';
+        mediaEl.classList.toggle('has-image', images.length > 0);
+        if(images.length === 0){
+          mediaEl.innerHTML = `<div class="pf-img-placeholder">${pfPlaceholderSVG}Image coming soon</div>`;
+          return;
+        }
+        const img = document.createElement('img');
+        img.src = images[state.imgIndex]; img.alt = item.name;
+        mediaEl.appendChild(img);
+        if(images.length > 1){
+          const c = document.createElement('div');
+          c.className = 'pf-img-counter'; c.textContent = (state.imgIndex + 1) + ' / ' + images.length;
+          mediaEl.appendChild(c);
+        }
+        mediaEl.onclick = () => {
+          stopAutoplay();
+          lb.open(images, state.imgIndex, (newIndex) => { state.imgIndex = newIndex; });
+        };
+      }
+      function renderSlide(){
+        const item = cat.items[state.current];
+        const total = cat.items.length;
+        eyebrowEl.textContent = cat.type === 'process'
+          ? `Step ${state.current + 1} of ${total}`
+          : `${state.current + 1} of ${total}`;
+        titleEl.textContent = item.name;
+        descEl.textContent = item.desc;
+        pageNum.textContent = `${state.current + 1} / ${total}`;
+        renderMedia();
+      }
+      function stopAutoplay(){ if(state.timer){ clearInterval(state.timer); state.timer = null; } }
+      function startAutoplay(){
+        stopAutoplay();
+        if(!panel.classList.contains('active')) return;
+        const item = cat.items[state.current];
+        if(item.images && item.images.length > 1){
+          state.timer = setInterval(() => {
+            state.imgIndex = (state.imgIndex + 1) % item.images.length;
+            renderMedia();
+          }, 2600);
+        }
+      }
+      function goTo(newIndex){
+        const total = cat.items.length;
+        state.current = (newIndex + total) % total;
+        state.imgIndex = 0;
+        renderSlide(); startAutoplay();
+      }
+      prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(state.current - 1); });
+      nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(state.current + 1); });
+      mediaEl.addEventListener('mouseenter', stopAutoplay);
+      mediaEl.addEventListener('mouseleave', startAutoplay);
+      renderSlide();
+      tabStates.push({ panel, state, startAutoplay, stopAutoplay });
+    });
+
+    function activateTab(idx){
+      tabsEl.querySelectorAll('.pf-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+      tabStates.forEach((ts, i) => {
+        ts.panel.classList.toggle('active', i === idx);
+        if(i === idx) ts.startAutoplay();
+        else ts.stopAutoplay();
+      });
+    }
+    activateTab(0);
+  }
+  buildPortfolioTabs();
+
+  const Toast = (function(){
+    const stack = document.getElementById('toastStack');
+    const icons = {
+      error: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>',
+      success: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>',
+      info: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>'
+    };
+    return {
+      show(type, title, msg, duration){
+        duration = duration || 4500;
+        const el = document.createElement('div');
+        el.className = 'toast ' + type;
+        el.innerHTML = `${icons[type] || icons.info}<div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
+        stack.appendChild(el);
+        setTimeout(() => { el.classList.add('hiding'); setTimeout(() => el.remove(), 320); }, duration);
+      },
+      error(t,m){ this.show('error',t,m); },
+      success(t,m){ this.show('success',t,m); },
+      info(t,m){ this.show('info',t,m); }
+    };
+  })();
+
+  (function(){
+    const countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Chad","Chile","China","Colombia","Congo","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Estonia","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Guatemala","Guinea","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Ivory Coast","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Liberia","Libya","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovakia","Slovenia","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"];
+    const DISPOSABLE_DOMAINS = new Set(['mailinator.com','10minutemail.com','tempmail.com','temp-mail.org','guerrillamail.com','guerrillamail.net','sharklasers.com','throwawaymail.com','yopmail.com','getnada.com','trashmail.com','maildrop.cc','dispostable.com','fakeinbox.com','mailnesia.com','tempinbox.com','mintemail.com','mytrashmail.com','spam4.me','grr.la','mailcatch.com','tempail.com','tempr.email','discard.email','mailmetrash.com','mt2009.com','mohmal.com','emailondeck.com','throwam.com','spamgourmet.com','mailexpire.com','mailtemp.info','tempemail.net','mailsac.com','inboxbear.com','moakt.com','email-temp.com','burnermail.io']);
+    const TYPO_MAP = {'gmial.com':'gmail.com','gmai.com':'gmail.com','gmail.co':'gmail.com','gmail.cm':'gmail.com','gmail.om':'gmail.com','gmail.con':'gmail.com','gmaill.com':'gmail.com','gnail.com':'gmail.com','gamil.com':'gmail.com','gmailcom':'gmail.com','gmaul.com':'gmail.com','gmal.com':'gmail.com','hotmial.com':'hotmail.com','hotmai.com':'hotmail.com','hotmail.co':'hotmail.com','hotmail.con':'hotmail.com','hotmall.com':'hotmail.com','hotamil.com':'hotmail.com','yaho.com':'yahoo.com','yahooo.com':'yahoo.com','yahoo.co':'yahoo.com','yahoo.con':'yahoo.com','yhaoo.com':'yahoo.com','yaoo.com':'yahoo.com','yhoo.com':'yahoo.com','outlok.com':'outlook.com','outllok.com':'outlook.com','outlook.co':'outlook.com','outlook.con':'outlook.com','outloo.com':'outlook.com','outllook.com':'outlook.com','iclod.com':'icloud.com','icoud.com':'icloud.com','icloud.co':'icloud.com','iclould.com':'icloud.com','protonmai.com':'protonmail.com','protonmal.com':'protonmail.com','protonmail.co':'protonmail.com'};
+    const POPULAR_DOMAINS = new Set(['gmail.com','yahoo.com','outlook.com','hotmail.com','icloud.com','protonmail.com','proton.me','live.com','msn.com','aol.com','zoho.com','yandex.com','gmx.com','mail.com','fastmail.com','tutanota.com','hey.com']);
+    const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const mxCache = new Map();
+    async function checkMX(domain){
+      if(mxCache.has(domain)) return mxCache.get(domain);
+      try{
+        const res = await fetch('https://dns.google/resolve?name=' + encodeURIComponent(domain) + '&type=MX', { cache:'force-cache' });
+        const data = await res.json();
+        const ok = !!(data && data.Answer && data.Answer.length > 0 && data.Status === 0);
+        mxCache.set(domain, ok); return ok;
+      }catch(err){ mxCache.set(domain, true); return true; }
+    }
+    const form = document.getElementById('contactForm');
+    if(!form) return;
+    const success = document.getElementById('contactFormSuccess');
+    const submitBtn = form.querySelector('.form-submit-btn');
+    const emailInput = form.querySelector('#contactEmail');
+    const emailSuggestBox = form.querySelector('[data-email-suggest]');
+    const emailSuggestBtn = form.querySelector('[data-email-suggest-btn]');
+    function fieldWrap(name){ return form.querySelector('[data-field="'+name+'"]'); }
+    function setError(name, msg){
+      const w = fieldWrap(name); if(!w) return;
+      w.classList.add('has-error'); w.classList.remove('has-success');
+      if(msg){ const m = w.querySelector('[data-error-msg]'); if(m) m.textContent = msg; }
+    }
+    function clearError(name){ const w = fieldWrap(name); if(w) w.classList.remove('has-error'); }
+    function setSuccess(name){ const w = fieldWrap(name); if(w){ w.classList.remove('has-error'); w.classList.add('has-success'); } }
+    function clearSuccess(name){ const w = fieldWrap(name); if(w) w.classList.remove('has-success'); }
+    function clearAllState(name){ clearError(name); clearSuccess(name); }
+
+    const countryDropdown = form.querySelector('[data-country-dropdown]');
+    const countryTrigger = form.querySelector('[data-country-trigger]');
+    const countrySearch = form.querySelector('[data-country-search]');
+    const countryList = form.querySelector('[data-country-list]');
+    const countryLabel = form.querySelector('[data-country-label]');
+    const countryHidden = form.querySelector('#contactCountry');
+    let selectedCountry = ''; let highlightedIndex = -1;
+
+    function renderCountryList(filter){
+      const f = (filter || '').toLowerCase().trim();
+      const matches = f ? countries.filter(c => c.toLowerCase().includes(f)) : countries.slice();
+      countryList.innerHTML = ''; highlightedIndex = -1;
+      if(matches.length === 0){ const empty = document.createElement('div'); empty.className = 'country-empty'; empty.textContent = 'No country found'; countryList.appendChild(empty); return; }
+      matches.forEach((c) => {
+        const el = document.createElement('div');
+        el.className = 'country-option'; el.textContent = c; el.dataset.value = c;
+        if(c === selectedCountry) el.classList.add('selected');
+        el.addEventListener('click', () => selectCountry(c));
+        countryList.appendChild(el);
+      });
+    }
+    function openCountryDropdown(){ renderCountryList(countrySearch.value); countryDropdown.classList.add('open'); setTimeout(() => countrySearch.focus(), 30); }
+    function closeCountryDropdown(){ countryDropdown.classList.remove('open'); countrySearch.value = ''; }
+    function selectCountry(name){
+      selectedCountry = name; countryHidden.value = name; countryLabel.textContent = name;
+      countryTrigger.classList.add('has-value');
+      clearAllState('country'); setSuccess('country'); closeCountryDropdown();
+    }
+    countryTrigger.addEventListener('click', (e) => { e.stopPropagation(); if(countryDropdown.classList.contains('open')) closeCountryDropdown(); else openCountryDropdown(); });
+    countrySearch.addEventListener('input', () => renderCountryList(countrySearch.value));
+    countrySearch.addEventListener('keydown', (e) => {
+      const options = countryList.querySelectorAll('.country-option');
+      if(e.key === 'ArrowDown'){ e.preventDefault(); if(highlightedIndex < options.length - 1){ if(highlightedIndex >= 0) options[highlightedIndex].classList.remove('highlighted'); highlightedIndex++; options[highlightedIndex].classList.add('highlighted'); options[highlightedIndex].scrollIntoView({ block:'nearest' }); } }
+      else if(e.key === 'ArrowUp'){ e.preventDefault(); if(highlightedIndex > 0){ options[highlightedIndex].classList.remove('highlighted'); highlightedIndex--; options[highlightedIndex].classList.add('highlighted'); options[highlightedIndex].scrollIntoView({ block:'nearest' }); } }
+      else if(e.key === 'Enter'){ e.preventDefault(); if(highlightedIndex >= 0 && options[highlightedIndex]) selectCountry(options[highlightedIndex].dataset.value); else if(options.length > 0) selectCountry(options[0].dataset.value); }
+      else if(e.key === 'Escape'){ closeCountryDropdown(); countryTrigger.focus(); }
+    });
+    document.addEventListener('click', (e) => { if(!countryDropdown.contains(e.target)) closeCountryDropdown(); });
+    function validateCountry(silent){ if(!selectedCountry){ if(!silent) setError('country', 'Please select your country.'); return false; } clearError('country'); setSuccess('country'); return true; }
+    function validateName(silent){ const v = form.querySelector('#contactName').value.trim(); if(!v){ if(!silent) setError('name', 'Please enter your name.'); return false; } if(v.length < 2){ if(!silent) setError('name', 'Name must be at least 2 characters.'); return false; } clearError('name'); setSuccess('name'); return true; }
+    async function validateEmail(silent){
+      const raw = emailInput.value.trim(); const v = raw.toLowerCase();
+      if(!v){ if(!silent) setError('email', 'Please enter your email address.'); return false; }
+      if(!EMAIL_REGEX.test(v)){ if(!silent) setError('email', 'Please enter a valid email (e.g. you@gmail.com).'); return false; }
+      const parts = v.split('@'); const domain = parts[1];
+      if(DISPOSABLE_DOMAINS.has(domain)){ if(!silent) setError('email', 'Disposable / temporary emails are not allowed.'); return false; }
+      if(TYPO_MAP[domain]){ if(!silent){ emailSuggestBox.classList.add('show'); emailSuggestBtn.textContent = parts[0] + '@' + TYPO_MAP[domain]; setError('email', 'Possible typo in domain.'); } return false; }
+      else { emailSuggestBox.classList.remove('show'); }
+      if(POPULAR_DOMAINS.has(domain)){ clearError('email'); setSuccess('email'); return true; }
+      const mxOk = await checkMX(domain);
+      if(!mxOk){ if(!silent) setError('email', 'This email domain does not accept mail.'); return false; }
+      clearError('email'); setSuccess('email'); return true;
+    }
+    function validateBusinessType(silent){ const sel = form.querySelector('#contactBusinessType'); if(!sel.value){ if(!silent) setError('businessType', 'Please select a business type.'); return false; } clearError('businessType'); setSuccess('businessType'); return true; }
+    function validateMessage(silent){ const v = form.querySelector('#contactMessage').value.trim(); if(!v){ if(!silent) setError('message', 'Please write a short message.'); return false; } if(v.length < 10){ if(!silent) setError('message', 'Message should be at least 10 characters.'); return false; } clearError('message'); setSuccess('message'); return true; }
+    const multiselect = form.querySelector('[data-multiselect]');
+    const trigger = form.querySelector('[data-multiselect-trigger]');
+    const panel = form.querySelector('[data-multiselect-panel]');
+    const labelEl = form.querySelector('[data-multiselect-label]');
+    const checkboxes = panel.querySelectorAll('input[type="checkbox"]');
+    function updateMultiselectLabel(){
+      const selected = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+      if(selected.length === 0){ labelEl.textContent = 'Select service(s)'; trigger.classList.remove('has-value'); }
+      else { labelEl.textContent = selected.join(', '); trigger.classList.add('has-value'); clearError('services'); setSuccess('services'); }
+    }
+    function validateServices(silent){ const any = Array.from(checkboxes).some(cb => cb.checked); if(!any){ if(!silent) setError('services', 'Please select at least one service.'); return false; } clearError('services'); setSuccess('services'); return true; }
+    trigger.addEventListener('click', (e) => { e.stopPropagation(); multiselect.classList.toggle('open'); });
+    document.addEventListener('click', (e) => { if(!multiselect.contains(e.target)) multiselect.classList.remove('open'); });
+    checkboxes.forEach(cb => cb.addEventListener('change', updateMultiselectLabel));
+    form.querySelector('#contactName').addEventListener('input', () => clearAllState('name'));
+    form.querySelector('#contactMessage').addEventListener('input', () => clearAllState('message'));
+    form.querySelector('#contactBusinessType').addEventListener('change', function(){ clearAllState('businessType'); if(this.value) validateBusinessType(true); });
+    let emailTimer = null;
+    emailInput.addEventListener('input', () => {
+      clearAllState('email'); emailSuggestBox.classList.remove('show');
+      clearTimeout(emailTimer);
+      const v = emailInput.value.trim();
+      if(v.length < 5) return;
+      emailTimer = setTimeout(() => { validateEmail(false); }, 650);
+    });
+    emailSuggestBtn.addEventListener('click', () => { emailInput.value = emailSuggestBtn.textContent; emailSuggestBox.classList.remove('show'); validateEmail(false); });
+    form.querySelector('#contactName').addEventListener('blur', () => { if(form.querySelector('#contactName').value.trim()) validateName(false); });
+    emailInput.addEventListener('blur', () => { if(emailInput.value.trim()) validateEmail(false); });
+    form.querySelector('#contactMessage').addEventListener('blur', () => { if(form.querySelector('#contactMessage').value.trim()) validateMessage(false); });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const results = await Promise.all([
+        Promise.resolve(validateName(false)), validateEmail(false),
+        Promise.resolve(validateCountry(false)), Promise.resolve(validateBusinessType(false)),
+        Promise.resolve(validateServices(false)), Promise.resolve(validateMessage(false))
+      ]);
+      const allValid = results.every(Boolean);
+      if(!allValid){
+        Toast.error('Form Incomplete', 'Please fix the highlighted fields before sending.');
+        const firstErr = form.querySelector('.has-error');
+        if(firstErr) firstErr.scrollIntoView({ behavior:'smooth', block:'center' });
+        return;
+      }
+      const formData = new FormData(form);
+      formData.delete('services');
+      checkboxes.forEach(cb => { if(cb.checked) formData.append('services', cb.value); });
+      submitBtn.disabled = true; submitBtn.textContent = 'Sending...';
+      fetch(form.action, { method:'POST', body: formData, headers:{ 'Accept':'application/json' } })
+      .then(response => {
+        if(response.ok){
+          form.style.display = 'none';
+          if(success) success.style.display = 'block';
+          Toast.success('Message Sent', 'Thanks! Habiba will get back to you soon.');
+        } else {
+          submitBtn.disabled = false; submitBtn.textContent = 'Send Message';
+          Toast.error('Send Failed', 'Something went wrong. Please try again.');
+        }
+      }).catch(() => {
+        submitBtn.disabled = false; submitBtn.textContent = 'Send Message';
+        Toast.error('Network Error', 'Could not reach the server. Please check your connection.');
+      });
+    });
+  })();
+</script>
+</body>
+</html>
